@@ -48,7 +48,7 @@ F*maven-repository/
 /org/
 /xmlenc/
 
-# Secrets / local env override â€” NEVER commit real keys
+# Secrets / local env override â€?NEVER commit real keys
 config/environment.yaml
 .env
 .env.*
@@ -86,3 +86,13 @@ testdata/fixture-v1/
 
 # jqwik property-test seed/cache
 .jqwik-database
+
+# IDE / AI assistants
+.kiro/
+
+# Windows metadata
+desktop.ini
+Thumbs.db
+
+# Local PDF drafts in docs
+docs/spec/*.pdf

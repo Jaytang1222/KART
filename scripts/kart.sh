@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Unified KART operator entry ‚Äî run inside WSL only.
+# Unified KART operator entry ‚Ä?run inside WSL only.
 # Source shared env/helpers: source scripts/kart.sh --lib
 KART_AS_LIB=0
 if [[ "${1:-}" == "--lib" ]]; then
@@ -12,7 +12,7 @@ ROOT="$KART_ROOT"
 cd "$KART_ROOT"
 
 # --- shared env (former kart-env.sh) ---
-# Canonical workspace: /home/jaytang/projects/llm-kv (ext4). Compat: ~/build/LLM_KV ‚Üí DST.
+# Canonical workspace: /home/jaytang/projects/llm-kv (ext4). Compat: ~/build/LLM_KV ‚Ü?DST.
 
 # The Windows checkout is this repository; the WSL checkout follows $HOME so
 # the scripts also work when the WSL login name and home-directory basename
@@ -38,7 +38,7 @@ export ZK_HOME="${ZK_HOME:-${HOME}/zookeeper}"
 export HBASE_HOME="${HBASE_HOME:-${HOME}/hbase}"
 export KART_JAR="${KART_JAR:-$KART_ROOT/target/kart.jar}"
 
-# Optional user truststore (kart.sh truststore) ‚Äî avoids intermittent PKIX on DeepSeek.
+# Optional user truststore (kart.sh truststore) ‚Ä?avoids intermittent PKIX on DeepSeek.
 if [[ -f "${HOME}/.kart/truststore" ]]; then
   _kart_ts="-Djavax.net.ssl.trustStore=${HOME}/.kart/truststore -Djavax.net.ssl.trustStorePassword=changeit"
   case "${JAVA_TOOL_OPTIONS:-}" in
@@ -106,11 +106,11 @@ kart_ensure_compat_symlink() {
   elif [[ -L "$KART_COMPAT" ]]; then
     ln -sfn "$KART_DST" "$KART_COMPAT"
   else
-    echo "WARN: $KART_COMPAT exists and is not a symlink ‚Äî leave untouched" >&2
+    echo "WARN: $KART_COMPAT exists and is not a symlink ‚Ä?leave untouched" >&2
   fi
 }
 
-# Sync Windows SRC ‚Üí WSL DST, then Maven package jar (canonical rebuild path).
+# Sync Windows SRC ‚Ü?WSL DST, then Maven package jar (canonical rebuild path).
 kart_rebuild_jar() {
   bash "$KART_ROOT/scripts/sync.sh"
   local REPO="${KART_MAVEN_REPO}" SRC="${KART_SRC}" DST="${KART_DST}"
@@ -129,7 +129,7 @@ kart_rebuild_jar() {
 
 kart_ensure_jar() {
   if [[ ! -f "$KART_JAR" ]]; then
-    echo "Missing $KART_JAR ‚Äî building‚Ä¶"
+    echo "Missing $KART_JAR ‚Ä?building‚Ä?
     kart_rebuild_jar
   fi
 }
@@ -138,7 +138,7 @@ if [[ -z "${KART_ACTION_RULES:-}" && -f "$KART_ROOT/experiments/suites/dual_acti
   export KART_ACTION_RULES="$KART_ROOT/experiments/suites/dual_action_rules.json"
   export KART_ACTION_MODE="${KART_ACTION_MODE:-dual-rules}"
 fi
-# Classic beam (time/zorder/hash): keeps plan‚â™5s so dual-rules e2e is not drowned by XZT FastCost.
+# Classic beam (time/zorder/hash): keeps plan‚â?s so dual-rules e2e is not drowned by XZT FastCost.
 # Always export (not only when rules file is present); Java defaults off when unset.
 export KART_ADVANCED_INDEXES="${KART_ADVANCED_INDEXES:-0}"
 # Formal gate (mining may set G1=-1e9); restore default when unset.
@@ -157,7 +157,7 @@ kart_llm_tunnel() {
     cp -f /mnt/c/Users/jayta/.ssh/id_ed25519_kart_server "$KEY"
     chmod 600 "$KEY"
   fi
-  local REMOTE="${KART_SSH_REMOTE:-tyq@10.242.104.108}"
+  local REMOTE="${KART_SSH_REMOTE:-user@hbase-master-host}"
   local PORT="${KART_SOCKS_PORT:-1080}"
   echo "Starting reverse SOCKS on $REMOTE:127.0.0.1:$PORT via $KEY"
   exec ssh -i "$KEY" \
@@ -191,7 +191,7 @@ EOF
   sudo visudo -cf "$SUDOERS"
   echo "Self-test:"
   sudo -n "$HELPER"
-  echo "EXIT:$? ‚Äî export KART_DROP_PAGE_CACHE=1 for formal cold runs"
+  echo "EXIT:$? ‚Ä?export KART_DROP_PAGE_CACHE=1 for formal cold runs"
 }
 
 kart_framework_check() {
@@ -249,7 +249,7 @@ kart_framework_check() {
         p && /oracle: datasets\/tdrive-query\/complex_query.json/ {o=1}
         END {exit !(w && o)}
       ' "$SUITES"; then
-      ok "suite $id ‚Üí complex_query"
+      ok "suite $id ‚Ü?complex_query"
     else
       bad "suite $id must use complex_query workload/oracle"
     fi
@@ -263,7 +263,7 @@ kart_framework_check() {
         p && /oracle: datasets\/tdrive-query\/simple_query.json/ {o=1}
         END {exit !(w && o)}
       ' "$SUITES"; then
-      ok "suite $id ‚Üí simple_query"
+      ok "suite $id ‚Ü?simple_query"
     else
       bad "suite $id must use simple_query workload/oracle"
     fi
@@ -285,7 +285,7 @@ kart_framework_check() {
   fi
 
   if grep -A20 '^  parse:' "$SUITES" | grep -q 'workload: datasets/tdrive-query/E1_query.json'; then
-    ok "parse ‚Üí E1_query"
+    ok "parse ‚Ü?E1_query"
   else
     bad "parse suite must use E1_query"
   fi
@@ -429,7 +429,7 @@ def pct_per_query(rows: List[Dict[str, Any]], key: str, p: float) -> Optional[fl
 
 
 def latency_at(rows: List[Dict[str, Any]], p: float = 50) -> Tuple[Optional[float], Optional[float], Optional[float]]:
-    """plan/exec via per-query median ‚Üí overall p; e2e := plan+exec (never independent t_e2e pct)."""
+    """plan/exec via per-query median ‚Ü?overall p; e2e := plan+exec (never independent t_e2e pct)."""
     plan = pct_per_query(rows, "t_plan_ms", p)
     exe = pct_per_query(rows, "t_exec_ms", p)
     if plan is not None and exe is not None:
@@ -916,7 +916,7 @@ kart_start_stack() {
       ok=1
       break
     fi
-    echo "  retry $i/18‚Ä¶"
+    echo "  retry $i/18‚Ä?
     sleep 5
   done
   if [[ "$ok" -eq 1 ]]; then
@@ -924,7 +924,7 @@ kart_start_stack() {
     grep -E "tables=|HBase|ZooKeeper|doctor" /tmp/kart-doctor-boot.log | tail -15 || true
     local MANIFEST="$KART_ROOT/catalog/tdrive_v1_ready.manifest.json"
     if [[ -f "$MANIFEST" ]]; then
-      echo "tdrive_v1_ready present ‚Äî ready for chat / query-nl / query-ir / smoke"
+      echo "tdrive_v1_ready present ‚Ä?ready for chat / query-nl / query-ir / smoke"
     else
       echo "WARN: missing $MANIFEST" >&2
       echo "  run: ./scripts/kart.sh run build-snapshot --data datasets/tdrive" >&2
@@ -1046,7 +1046,7 @@ kart_demo_verify() {
   ok()   { echo "PASS  $*" | tee -a "$LOG"; pass=$((pass+1)); }
   bad()  { echo "FAIL  $*" | tee -a "$LOG"; fail=$((fail+1)); }
   skip() { echo "SKIP  $*" | tee -a "$LOG"; skip=$((skip+1)); }
-  echo "======== KART demo-verify (Live LLM ‚Üí HBase T-Drive) ========" | tee -a "$LOG"
+  echo "======== KART demo-verify (Live LLM ‚Ü?HBase T-Drive) ========" | tee -a "$LOG"
   echo "root=$ROOT time=$(date)" | tee -a "$LOG"
   kart_ensure_jar
   if [[ -f "$KART_JAR" ]]; then ok "jar present"; else bad "jar missing"; fi
@@ -1055,7 +1055,7 @@ kart_demo_verify() {
     if grep -q "doctor: OK" /tmp/kart-dv-doctor.log; then
       ok "doctor"; HBASE_OK=1
     else
-      bad "doctor (missing OK ‚Äî run ./scripts/kart.sh up)"
+      bad "doctor (missing OK ‚Ä?run ./scripts/kart.sh up)"
     fi
   else
     bad "doctor (run ./scripts/kart.sh up)"
@@ -1064,7 +1064,7 @@ kart_demo_verify() {
     if [[ -f "$ROOT/catalog/tdrive_v1_ready.manifest.json" ]]; then
       ok "catalog tdrive_v1_ready"
     else
-      bad "catalog missing tdrive_v1_ready ‚Äî run build-snapshot"
+      bad "catalog missing tdrive_v1_ready ‚Ä?run build-snapshot"
       HBASE_OK=0
     fi
   fi
@@ -1112,10 +1112,10 @@ kart_demo_failures() {
   mvn -Dmaven.repo.local="${KART_MAVEN_REPO}" -q -Dtest=CoordinatorFailureTest,QueryNlAcceptanceTest test
   echo ""
   echo "Expected status mapping (from tests / dialog):"
-  echo "  RESOURCE_EXHAUSTED   ‚Äî max_candidate_chunks=1 | soft_memory_bytes tiny"
-  echo "  DATA_INTEGRITY_ERROR ‚Äî missing raw chunk on FETCH/BATCH_GET"
-  echo "  UNSUPPORTED_QUERY    ‚Äî COUNT / aggregation rejected in Dialog/DraftIrParser"
-  echo "  parse/LLM failure    ‚Äî INVALID_IR paths in QueryNlAcceptanceTest (ScriptedLlmClient)"
+  echo "  RESOURCE_EXHAUSTED   ‚Ä?max_candidate_chunks=1 | soft_memory_bytes tiny"
+  echo "  DATA_INTEGRITY_ERROR ‚Ä?missing raw chunk on FETCH/BATCH_GET"
+  echo "  UNSUPPORTED_QUERY    ‚Ä?COUNT / aggregation rejected in Dialog/DraftIrParser"
+  echo "  parse/LLM failure    ‚Ä?INVALID_IR paths in QueryNlAcceptanceTest (ScriptedLlmClient)"
   if [[ "${KART_LIVE:-0}" == "1" ]]; then
     echo ""
     echo "=== demo-failures: live UNSUPPORTED (COUNT) via chat one-shot if available ==="
@@ -1233,20 +1233,20 @@ ensure_hbase() {
   if ss -lntp 2>/dev/null | grep -q ':16020'; then
     return 0
   fi
-  echo "HBase RS :16020 not listening ‚Äî restarting stack" | tee -a "$LOG"
+  echo "HBase RS :16020 not listening ‚Ä?restarting stack" | tee -a "$LOG"
   bash "$ROOT/scripts/kart.sh" down || true
   sleep 3
   bash "$ROOT/scripts/kart.sh" up
 }
 
-# Early rejects (no HBase exec) ‚Äî short timeout
+# Early rejects (no HBase exec) ‚Ä?short timeout
 run_nl r1_count "COUNT how many trajectories intersect beijing_core between 2008-02-03T21:20:00+08:00 and 2008-02-03T21:30:00+08:00" "" 60
 run_nl r2_continuous "Find trajectories whose continuous path segment crosses the ring road (not just GPS samples)" "" 60
 run_nl r3_edit "Top-3 trajectories most similar to 8857-8857_14 using EDIT_DISTANCE" "" 90
 run_nl r4_cfrechet "Use continuous Fr√©chet distance to find neighbors of 8857-8857_14" "" 60
 run_nl r5_mars "Trajectories through ÁÅ´ÊòüÂπøÂú∫ yesterday" "$OUT/answers-r5.txt" 180
 
-# Executing cases ‚Äî ensure RS is up (LLM-long connects can leave stale RS)
+# Executing cases ‚Ä?ensure RS is up (LLM-long connects can leave stale RS)
 ensure_hbase
 run_nl v1_full "Find trajectories of taxi 8857 between 2008-02-03T21:20:00+08:00 and 2008-02-03T21:30:00+08:00" "$OUT/answers-y.txt" 240
 ensure_hbase
@@ -1328,7 +1328,7 @@ ensure_hbase() {
      && grep -q 'doctor: OK' /tmp/hb-doc.log; then
     return 0
   fi
-  echo "HBase not healthy ‚Äî restarting" | tee -a "$LOG"
+  echo "HBase not healthy ‚Ä?restarting" | tee -a "$LOG"
   bash "$ROOT/scripts/kart.sh" down || true
   sleep 3
   bash "$ROOT/scripts/kart.sh" up
@@ -1508,7 +1508,7 @@ check("h_r3", "unsupported", note="hard R3 continuous polyline")
 check("h_r4", "unsupported", note="hard R4 LCSS")
 check("h_r5", "clarify_no_huge", note="hard R5 mars dump")
 
-# soft note for h_r1 if not early-rejected ‚Äî still report
+# soft note for h_r1 if not early-rejected ‚Ä?still report
 all_ok = all(r["ok"] for r in rows)
 print("HANDBOOK_CHAT", "PASS" if all_ok else "FAIL")
 (root / "summary.json").write_text(json.dumps({"pass": all_ok, "cases": rows}, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -1567,25 +1567,25 @@ case "$cmd" in
     ;;
   help|-h|--help)
     cat <<'EOF'
-KART ‚Äî run all of this in WSL (not PowerShell).
+KART ‚Ä?run all of this in WSL (not PowerShell).
 
 Daily:
   ./scripts/kart.sh up
   ./scripts/kart.sh run build-snapshot --data datasets/tdrive   # if catalog missing
-  ./scripts/kart.sh chat          # Live LLM ‚Üí HBase
+  ./scripts/kart.sh chat          # Live LLM ‚Ü?HBase
   ./scripts/kart.sh down
 
 Also: doctor | probe | check | rebuild | test | run <cli-args>
       sync | sync-check | chat-easy | chat-handbook | demo-failures | hbase-evidence | truststore
 Formal experiments:
-  ./scripts/comparative.sh [--date YYYYMMDD]   # ‚Üí comparativeE1/E3-DATE.md
+  ./scripts/comparative.sh [--date YYYYMMDD]   # ‚Ü?comparativeE1/E3-DATE.md
   ./scripts/ablation.sh    [--date YYYYMMDD]
   ./scripts/parameter.sh   [--date YYYYMMDD]
 Also: sync | sync-check | drop-cache-install | tunnel | framework-check | server-env
 EOF
     ;;
   *)
-    echo "Unknown: $cmd ‚Äî try ./scripts/kart.sh help" >&2
+    echo "Unknown: $cmd ‚Ä?try ./scripts/kart.sh help" >&2
     exit 2
     ;;
 esac

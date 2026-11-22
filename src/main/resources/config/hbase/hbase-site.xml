@@ -11,7 +11,7 @@
   </property>
   <property>
     <name>zookeeper.znode.parent</name>
-    <value>/hbase-tyq</value>
+    <value>/hbase</value>
   </property>
   <property>
     <name>hbase.client.operation.timeout</name>

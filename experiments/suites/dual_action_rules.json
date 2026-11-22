@@ -78,7 +78,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -173,7 +173,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -278,7 +278,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -369,7 +369,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -471,7 +471,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -568,7 +568,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -669,7 +669,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -775,7 +775,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -865,7 +865,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -965,7 +965,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1065,7 +1065,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1155,7 +1155,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1260,7 +1260,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1350,7 +1350,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1440,7 +1440,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1546,7 +1546,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1652,7 +1652,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1813,7 +1813,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -1975,7 +1975,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2137,7 +2137,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/tdrive",
+          "source": "<repo_root>/datasets/tdrive",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2308,7 +2308,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2414,7 +2414,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2504,7 +2504,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2604,7 +2604,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2704,7 +2704,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2794,7 +2794,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2899,7 +2899,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
@@ -2989,7 +2989,7 @@
         "semantics_version": "point_similarity_v2",
         "stats_version": "stats_v1",
         "dataset": {
-          "source": "/home/tyq/projects/llm-kv/datasets/porto",
+          "source": "<repo_root>/datasets/porto",
           "checksum": "see-build-report",
           "assumptions": [
             "A1",
