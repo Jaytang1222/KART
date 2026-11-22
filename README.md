@@ -11,13 +11,8 @@ KART maps natural-language trajectory queries to a typed intermediate representa
 ```
 config/                       Cost patches, planner defaults, region catalog, HBase client config
 datasets/
-  tdrive/                     T-Drive raw trajectory shards (used to build the HBase snapshot)
   tdrive-query/               Frozen query workloads: E1 / complex / simple / workload / scalability
-  porto-query/                Same structure for Porto; raw CSV excluded from git (too large)
-docs/
-  environment-lock.md         Software versions and experiment protocol
-  supported-semantics.md      Supported IR semantics and query types
-  spec/                       System requirements, design, and experiment specifications
+  porto-query/                Same structure for Porto
 experiments/
   adapters/                   Third-party bridges (Bao, ParamTree, DIN-SQL, SAG-MQL, DirectIR)
   suites/                     Offline rewrite rules (dual_action_rules.json)
@@ -25,45 +20,42 @@ experiments/
   results/                    experiment_design.xlsx only; run outputs are generated locally
 scripts/
   kart.sh                     Unified operator entry point
-  comparative.sh              E1 + E3 comparative experiment (Table 3 / Table 5)
-  ablation.sh                 Ablation experiment (Table 6)
-  parameter.sh                Parameter sensitivity (OAT, Table 7)
-  workload.sh                 Workload distribution experiment (Table 4)
-  scalability.sh              Scalability experiment (Table 8)
+  comparative.sh              E1 + E3 comparative experiment
+  ablation.sh                 Ablation experiment
+  parameter.sh                Parameter sensitivity (OAT)
+  workload.sh                 Workload distribution experiment
+  scalability.sh              Scalability experiment
 src/                          Java source (Maven project)
 ```
 
-Formal suite definitions are in `src/main/resources/experiments/suites.yaml`. All experiment scripts resolve suite IDs from this file.
+Formal suite definitions are in `src/main/resources/experiments/suites.yaml`.
 
 ---
 
 ## Requirements
 
-- **OS:** Ubuntu 20.04 / 22.04 (native Linux or WSL 2). Scripts require Bash; do not run `.sh` files directly in Windows CMD.
+- **OS:** Ubuntu 20.04 / 22.04 (native Linux or WSL 2). Scripts require Bash.
 - **JDK:** OpenJDK 8 (`JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`)
 - **Maven:** 3.6.3+
 - **HBase server:** 2.2.3 with ZooKeeper 3.4.10 and Hadoop 2.8.5
-- **Python:** 3.8+ (third-party adapter bridges and summary scripts)
-- **LLM:** Any OpenAI-compatible HTTP endpoint that supports `response_format=json_object`
+- **Python:** 3.8+ (adapter bridges and summary scripts)
+- **LLM:** Any OpenAI-compatible endpoint supporting `response_format=json_object`
 
 ---
 
 ## Installation
 
 ```bash
-# Clone the repository
 git clone <repository-url>
 cd <repository-directory>
 
-# Install Java dependencies and build the JAR
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-./scripts/kart.sh rebuild       # runs mvn package; copies kart.jar to target/
+./scripts/kart.sh rebuild       # runs mvn package; produces target/kart.jar
 
-# Install Python dependencies for adapter bridges
 pip install requests numpy scikit-learn torch
 ```
 
-**On WSL:** Maven must use the Linux-local repository. The build script passes `-Dmaven.repo.local=$HOME/.m2/repository` automatically. Do not use a Windows-path `localRepository` in `settings.xml`.
+**On WSL:** the build script passes `-Dmaven.repo.local=$HOME/.m2/repository` automatically. Do not use a Windows-path `localRepository` in `settings.xml`.
 
 ---
 
@@ -71,9 +63,14 @@ pip install requests numpy scikit-learn torch
 
 ### LLM credentials
 
+Create a `.env` file in the repository root:
+
 ```bash
-cp .env.example .env
-# Edit .env and fill in LLM_BASE_URL, LLM_MODEL, LLM_API_KEY
+LLM_PROVIDER=deepseek
+LLM_BASE_URL=https://api.deepseek.com/v1
+LLM_MODEL=deepseek-flash
+LLM_API_KEY=<your-key>
+LLM_JSON_MODE=true
 ```
 
 The `.env` file is gitignored. Never commit credentials.
@@ -88,7 +85,7 @@ The `.env` file is gitignored. Never commit credentials.
 
 ### HBase client
 
-Edit `src/main/resources/config/hbase/hbase-site.xml` (and optionally `config/hbase/hbase-site.xml`) to point at your ZooKeeper quorum:
+Edit `src/main/resources/config/hbase/hbase-site.xml` to point at your ZooKeeper quorum:
 
 ```xml
 <property>
@@ -113,23 +110,31 @@ Verify the connection:
 
 ### T-Drive
 
-The `datasets/tdrive/` shards are included in the repository. Load them into HBase once:
+The raw T-Drive trajectory shards are not included in this repository (redistributability constraints). Download them from the [Microsoft T-Drive dataset](https://www.microsoft.com/en-us/research/publication/t-drive-trajectory-data-sample/) and place the files under `datasets/tdrive/`. Then build the HBase snapshot:
 
 ```bash
 ./scripts/kart.sh run build-snapshot --data datasets/tdrive
 ```
 
-This produces the `tdrive_v1_ready` catalog manifest under `catalog/` (gitignored; regenerate locally).
+This produces the `tdrive_v1_ready` catalog manifest under `catalog/` (gitignored).
 
 ### Porto
 
-The raw Porto CSV is too large for git. Download the dataset separately and place it at `datasets/porto/porto_clean.csv`, then:
+Download the Porto taxi dataset and place the cleaned CSV at `datasets/porto/porto_clean.csv`, then:
 
 ```bash
 ./scripts/kart.sh run build-snapshot --data datasets/porto
 ```
 
-Frozen query workloads for both datasets are already included under `datasets/{tdrive,porto}-query/`.
+### Query Workloads
+
+Frozen query workloads for both datasets are included:
+
+```
+datasets/tdrive-query/    E1_query.json  complex_query.json  simple_query.json
+                          workload_query.json  scalability_query.json
+datasets/porto-query/     (same structure)
+```
 
 ---
 
@@ -142,43 +147,43 @@ bash experiments/adapters/clone-third-party.sh
 bash experiments/adapters/clone-third-party.sh --verify
 ```
 
-Cloned trees land in `experiments/adapters/upstream/` (gitignored). These are control-flow transplants that operate on KART's IR and plan family — they are not the original upstream systems reproducing their own SQL/MQL/PostgreSQL pipelines.
+Cloned trees land in `experiments/adapters/upstream/` (gitignored). These adapters transplant the control flow of each baseline onto KART's IR and plan family.
 
 ---
 
 ## Running Experiments
 
-All experiments assume the HBase cluster is running, `catalog/` manifests exist, and `.env` is populated. Set `KART_DATASET` and `KART_EXP_DATE` as needed:
+All experiments require a running HBase cluster, populated `catalog/` manifests, and a configured `.env`.
 
 ```bash
 export KART_EXP_DATE=YYYYMMDD
 ```
 
-### Table 3 — NL→IR Comparison (E1) + Table 5 — Query Processing (E3)
+### Comparative (E1 NL→IR + E3 Query Processing)
 
 ```bash
 ./scripts/comparative.sh --dataset tdrive --date $KART_EXP_DATE
 ./scripts/comparative.sh --dataset porto  --date $KART_EXP_DATE
 ```
 
-Outputs: `experiments/results/comparativeE1-{dataset}-{date}.md`, `comparativeE3-{dataset}-{date}.md`, `case_study-{dataset}-{date}.md`.
+Outputs: `experiments/results/comparativeE1-{dataset}-{date}.md`, `comparativeE3-{dataset}-{date}.md`.
 
-### Table 4 — Workload Distribution
+### Workload Distribution
 
 ```bash
 ./scripts/workload.sh --dataset both --date $KART_EXP_DATE
 ```
 
-### Table 6 — Ablation
+### Ablation
 
 ```bash
 ./scripts/ablation.sh --dataset tdrive --date $KART_EXP_DATE
 ./scripts/ablation.sh --dataset porto  --date $KART_EXP_DATE
 ```
 
-Ablation factors: `no_rule_llm` / `no_costmodel_llm` / `no_costmodel` / `no_verify`.
+Factors: `no_rule_llm` / `no_costmodel_llm` / `no_costmodel` / `no_verify`.
 
-### Table 7 — Parameter Sensitivity (OAT)
+### Parameter Sensitivity (OAT)
 
 Beam width ∈ {1, 3, 5, 7}; max\_candidates ∈ {4, 6, 8, 10}:
 
@@ -187,13 +192,11 @@ Beam width ∈ {1, 3, 5, 7}; max\_candidates ∈ {4, 6, 8, 10}:
 ./scripts/parameter.sh --dataset porto  --date $KART_EXP_DATE
 ```
 
-### Table 8 — Scalability
+### Scalability
 
 ```bash
 ./scripts/scalability.sh --dataset both --date $KART_EXP_DATE
 ```
-
-Scalability manifests (`tdrive_x10_ready`, `tdrive_x50_ready`, etc.) must be built before running.
 
 ### Single Suite
 
@@ -208,7 +211,7 @@ Scalability manifests (`tdrive_x10_ready`, `tdrive_x50_ready`, etc.) must be bui
 
 ```bash
 ./scripts/kart.sh doctor   # JDK + HBase connectivity
-./scripts/kart.sh probe    # LLM endpoint (requires .env)
+./scripts/kart.sh probe    # LLM endpoint
 ./scripts/kart.sh smoke    # End-to-end oracle check (requires catalog + HBase)
 ```
 
@@ -233,9 +236,9 @@ Scalability manifests (`tdrive_x10_ready`, `tdrive_x50_ready`, etc.) must be bui
 
 ## Reported Results
 
-Aggregated results are in `experiments/results/experiment_design.xlsx`. Raw run outputs are not committed; regenerate them locally using the scripts above with the same `KART_EXP_DATE`.
+Aggregated results are in `experiments/results/experiment_design.xlsx`. Raw run outputs are not committed; regenerate them with the scripts above.
 
-Experiment protocol: warm cache, 10 timed trials, P50 / P95 / P99 latency reported. See `docs/environment-lock.md` for the full version and configuration record.
+Experiment protocol: warm cache, 10 timed trials, P50 / P95 / P99 latency reported.
 
 ---
 

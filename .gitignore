@@ -96,3 +96,11 @@ Thumbs.db
 
 # Local PDF drafts in docs
 docs/spec/*.pdf
+# Internal design documents and experiment specs (not for public repo)
+docs/
+
+# Example env template (avoid confusion; configure manually)
+.env.example
+
+# Raw T-Drive trajectory shards (download separately; too large and not redistributable)
+datasets/tdrive/
